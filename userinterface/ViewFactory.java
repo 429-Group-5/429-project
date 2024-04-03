@@ -18,9 +18,11 @@ public class ViewFactory {
 			case "AddInventoryItemView":
 				//return new AddInventoryItemView(model);
 			case "SearchArticleTypeView":
-				return new SearchArticleTypeView(model);
+				//return new SearchArticleTypeView(model);
 			case "DeleteArticleTypeView":
 				return new DeleteArticleTypeView(model);
+			case "ConfirmDeleteArticleView":
+				return new ConfirmDeleteArticleView(model);
 			default:
 				return null;
 		}

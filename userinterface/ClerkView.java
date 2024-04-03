@@ -114,7 +114,7 @@ public class ClerkView extends View {
 			@Override
 			public void handle(ActionEvent e) {
 				myModel.stateChangeRequest("DeleteArticleType", null);
-			 }
+			 } //Button calls Clerk stateChangeRequest
 		});
         grid.add(deleteArticleTypeButton, 3, 0);
 

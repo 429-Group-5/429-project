@@ -21,6 +21,9 @@ public class DeleteArticleTypeTransaction extends Transaction {
 
 	private ArticleTypeCollection articleTypeCollection;
     private ArticleType selectedArticleType;
+    private String description;
+    private String barcodePrefix;
+    private String alphaCode;    
 
 	public DeleteArticleTypeTransaction() throws Exception {
 		super();
@@ -28,7 +31,7 @@ public class DeleteArticleTypeTransaction extends Transaction {
         try {
             ArticleTypeCollection articleTypes = new ArticleTypeCollection();
             //articleTypes.getColors();
-            articleTypeCollection = (ArticleTypeCollection)articleTypes.getState("ColorCollection");
+            articleTypeCollection = (ArticleTypeCollection)articleTypes.getState("ArticleTypeCollection");
         }
         catch (Exception exc) {
             System.err.println(exc);
@@ -45,11 +48,29 @@ public class DeleteArticleTypeTransaction extends Transaction {
 	}
 
 	/**
-	 * This method encapsulates all the logic of creating the account,
-	 * verifying ownership, crediting, etc. etc.
+	 * Method creates table by taking in prop
 	 */
 	//----------------------------------------------------------
-	public void processTransaction() {
+	public void processTransaction(Properties props) {
+
+        description = props.getProperty("description");
+        alphaCode = props.getProperty("alphaCode");
+		articleTypeCollection = new ArticleTypeCollection();
+
+		if (!(alphaCode == null)) {
+			articleTypeCollection.findArticleTypeAlphaCode(alphaCode);
+			alphaCode = null;
+		} else if (!(description == null)){
+			articleTypeCollection.findArticleTypeDesc(description);
+			description = null;
+		}
+        
+	}
+
+    /*Called when confirm delete view submit button is hit
+     * 
+     */
+    public void processDeleteTransaction() {
         selectedArticleType.delete();
         selectedArticleType.update();
         transactionStatusMessage = (String)selectedArticleType.getState("UpdateStatusMessage");
@@ -59,7 +80,7 @@ public class DeleteArticleTypeTransaction extends Transaction {
         catch (Exception exc) {
             System.err.println(exc);
         }
-	}
+    }
 
 	//-----------------------------------------------------------
 	public Object getState(String key) {
@@ -75,6 +96,8 @@ public class DeleteArticleTypeTransaction extends Transaction {
             case "barcodePrefix":
             case "alphaCode":
                 return selectedArticleType.getState(key);
+            case "string":
+                return selectedArticleType.toString();
             default:
                 System.err.println("DeleteArticleTypeTransaction: invalid key for getState: "+key);
                 break;
@@ -85,18 +108,25 @@ public class DeleteArticleTypeTransaction extends Transaction {
 	//-----------------------------------------------------------
 	public void stateChangeRequest(String key, Object value) {
 		switch(key) {
-            case "DoYourJob":
-                doYourJob();
+            case "DoYourJob": //called from doTransaction of Clerk
+                doYourJob(); //Extended from Transaction, will create view
                 break;
             case "DoDeleteArticleType":   // called from DeleteArticleTypeView on submit
-                processTransaction();
+            //This fills in table    
+            processTransaction((Properties)value);
                 break;
-            case "ArticleTypeSelected":
+            case "ArticleTypeSelected": //Called from DeleteArticleTypeView
+                //ArticleType is created from props passed from View
 				selectedArticleType = new ArticleType((Properties)value);
+                //Call local method
 				createAndShowDeleteArticleTypeView();
 				break;
             case "CancelDeleteArticleType":
                 swapToView(createView());
+                break;
+            case "ConfirmDeleteArticleType": //called from confirm view
+                //actually sets article type to inactive
+                processDeleteTransaction();
                 break;
         }
 		myRegistry.updateSubscribers(key, this);
@@ -109,11 +139,19 @@ public class DeleteArticleTypeTransaction extends Transaction {
 
         return currentScene;
 	}
-
+    
+    /*Method called from local stateChangeRequest
+     * - Upon double clicking table entry this should create new view for
+     * confirming deletion
+     */
     protected void createAndShowDeleteArticleTypeView() {
-        View newView = ViewFactory.createView("DeleteArticleTypeView", this);
+        View newView = ViewFactory.createView("ConfirmDeleteArticleView", this);
         Scene currentScene = new Scene(newView);
-        myViews.put("DeleteArticleTypeView", currentScene);
+        myViews.put("ConfirmDeleteArticleView", currentScene);
 		swapToView(currentScene);
+    }
+
+    protected void createAndShowConfirmDeleteView() {
+
     }
 }

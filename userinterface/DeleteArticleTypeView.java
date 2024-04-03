@@ -207,6 +207,7 @@ public class DeleteArticleTypeView extends View
 				clearErrorMessage(); 
 				Properties props = getInput();
 
+				//This stateChangeRequest is from DeleteArticleTypeTransaction
 				myModel.stateChangeRequest("DoDeleteArticleType", props);
 				getEntryTableModelValues();
 			}
@@ -258,7 +259,8 @@ public class DeleteArticleTypeView extends View
 			props.setProperty("barcodePrefix", selectedItem.getBarcodePrefix());
 			props.setProperty("alphaCode", selectedItem.getAlphaCode());
 
-			myModel.stateChangeRequest("ColorSelected", props);
+			//Calls to DeleteArticleTypeTransaction
+			myModel.stateChangeRequest("ArticleTypeSelected", props);
 		}
 	}
 
