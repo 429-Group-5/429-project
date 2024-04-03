@@ -154,8 +154,4 @@ public class DeleteArticleTypeTransaction extends Transaction {
         myViews.put("ConfirmDeleteArticleView", currentScene);
 		swapToView(currentScene);
     }
-
-    protected void createAndShowConfirmDeleteView() {
-
-    }
 }

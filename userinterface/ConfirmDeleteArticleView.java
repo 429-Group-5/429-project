@@ -128,6 +128,8 @@ public class ConfirmDeleteArticleView extends View {
 				clearErrorMessage();
 				//call DeleteARticlTypeTransaction stateChangeRequest
 				myModel.stateChangeRequest("ConfirmDeleteArticleType", null);
+				statusLog.displayMessage("Article Type was deleted!");
+				//myModel.stateChangeRequest("CancelDeleteArticleType", null);
 			}
 		});
         btnContainer.getChildren().add(submitButton);
