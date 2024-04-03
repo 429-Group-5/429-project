@@ -55,8 +55,11 @@ public class ArticleTypeCollection extends EntityBase {
 		}
 	}
 
+    /*Finds article types by ONLY description-----------------------------------------------------------------
+     * Called by DeleteArticleTypeTransaction
+     */
     public void findArticleTypeDesc(String description) {
-        String query = "SELECT * FROM " + myTableName + " WHERE description LIKE '%" + description + "%';";
+        String query = "SELECT * FROM " + myTableName + " WHERE description LIKE '%" + description + "%' AND status = '" + "Active" + "';";
 
         Vector allDataRetrieved = getSelectQueryResult(query);
 
@@ -79,8 +82,11 @@ public class ArticleTypeCollection extends EntityBase {
         }
     }
 
+    /*findArticleTypeBarcordePrefix----------------------------------------------------------------------
+     * finds article types by ONLY barcode Prefix
+     */
     public void findArticleTypeBarCodePrefix(String barcodePrefix) {
-        String query = "SELECT * FROM " + myTableName + " WHERE (barcodePrefix = " + barcodePrefix + ");";
+        String query = "SELECT * FROM " + myTableName + " WHERE (barcodePrefix = " + barcodePrefix + ") AND (status = " + "Active" + ");";
 
         Vector allDataRetrieved = getSelectQueryResult(query);
 
@@ -102,10 +108,44 @@ public class ArticleTypeCollection extends EntityBase {
 
         }
 
-    }
+    }//End findArticleTypeBarcodePrefix-------------------------------------------------------------
 
+    /*findArticleTypeBoth--------------------------------------------------------------------------
+     * finds ArticleTypes by both alpha code and description
+     */
+    public void findArticleTypeBoth(String alphaCode, String description){
+    
+        String query = "SELECT * FROM " + myTableName + 
+            " WHERE alphaCode = '" + alphaCode + "' OR description LIKE '%" + description + "%' AND status = '" + "Active" + "';";
+        
+        Vector allDataRetrieved = getSelectQueryResult(query);
+
+        if (allDataRetrieved != null)
+        {
+            //articleTypeList = new Vector<ArticleType>();
+
+            for (int cnt = 0; cnt < allDataRetrieved.size(); cnt++)
+            {
+                Properties nextArticleTypeData = (Properties)allDataRetrieved.elementAt(cnt);
+
+                ArticleType articleType = new ArticleType(nextArticleTypeData);
+
+                if (articleType != null)
+                {
+                    addArticleType(articleType);
+                }
+            }
+
+        }    
+     
+    
+    }//End find both-----------------------------------------------------------------------------
+
+    /*findArticleTypeAlphaCode----------------------------------------------------------------------
+     * finds ArticleTypes by ONLY alpha code
+     */
     public void findArticleTypeAlphaCode(String alphaCode) {
-        String query = "SELECT * FROM " + myTableName + " WHERE (alphaCode = '" + alphaCode + "')";
+        String query = "SELECT * FROM " + myTableName + " WHERE alphaCode = '" + alphaCode + "' AND status = '" + "Active" + "';";
         
         Vector allDataRetrieved = getSelectQueryResult(query);
 

@@ -48,7 +48,7 @@ public class DeleteArticleTypeTransaction extends Transaction {
 	}
 
 	/**
-	 * Method creates table by taking in prop
+	 * Method creates table by taking in prop from text fields
 	 */
 	//----------------------------------------------------------
 	public void processTransaction(Properties props) {
@@ -57,13 +57,17 @@ public class DeleteArticleTypeTransaction extends Transaction {
         alphaCode = props.getProperty("alphaCode");
 		articleTypeCollection = new ArticleTypeCollection();
 
-		if (!(alphaCode == null)) {
+		if (alphaCode != null && description == null) {
 			articleTypeCollection.findArticleTypeAlphaCode(alphaCode);
 			alphaCode = null;
-		} else if (!(description == null)){
+		} else if (description != null && alphaCode == null){
 			articleTypeCollection.findArticleTypeDesc(description);
 			description = null;
-		}
+		} else if (description != null && alphaCode != null){
+            articleTypeCollection.findArticleTypeBoth(alphaCode, description);
+            alphaCode = null;
+            description = null;
+        }
         
 	}
 

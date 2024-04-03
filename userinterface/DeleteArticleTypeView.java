@@ -74,7 +74,7 @@ public class DeleteArticleTypeView extends View
 
 		getChildren().add(container);
 		
-		populateFields();
+		//populateFields();
 	}
 
 	//--------------------------------------------------------------------------
@@ -89,6 +89,12 @@ public class DeleteArticleTypeView extends View
 			articleTypeCollection = (ArticleTypeCollection)myModel.getState("ArticleTypeCollection");
 
 	 		Vector entryList = (Vector)articleTypeCollection.getState("ArticleTypes");
+
+			//if nothing was found in search display error message
+			if (entryList.isEmpty()){
+				statusLog.displayErrorMessage("No matching records found");
+			}
+
 			Enumeration entries = entryList.elements();
 			while (entries.hasMoreElements() == true) {
 				ArticleType nextArticleType = (ArticleType)entries.nextElement();
@@ -96,8 +102,7 @@ public class DeleteArticleTypeView extends View
 
 				// add this list entry to the list
 				ArticleTypeTableModel nextTableRowData = new ArticleTypeTableModel(view);
-				tableData.add(nextTableRowData);
-				
+				tableData.add(nextTableRowData);				
 			}
 			
 			tableOfArticleTypes.setItems(tableData);
@@ -227,7 +232,7 @@ public class DeleteArticleTypeView extends View
 			 		*/
 					//----------------------------------------------------------
        		     	clearErrorMessage();
-       		     	myModel.stateChangeRequest("CancelColorCollection", null); 
+       		     	myModel.stateChangeRequest("CancelTransaction", null); 
             	  }
         	});
 
@@ -293,7 +298,7 @@ public class DeleteArticleTypeView extends View
 	public Properties getInput() {
 		Properties props = new Properties();
 		props.setProperty("description", description.getText());
-		// props.setProperty("alphaCode", alphaCode.getText());
+		props.setProperty("alphaCode", alphaCode.getText());
 		return props;
 	}
 	/*

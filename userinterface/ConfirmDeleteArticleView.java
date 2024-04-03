@@ -111,7 +111,7 @@ public class ConfirmDeleteArticleView extends View {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
         
-        Text prompt = new Text("Are you sure you'd like to delete this Article Type?" + description);
+        Text prompt = new Text("Are you sure you'd like to delete this Article Type?\n" + description);
         prompt.setWrappingWidth(350);
         prompt.setTextAlignment(TextAlignment.CENTER);
         prompt.setFill(javafx.scene.paint.Color.BLACK);
