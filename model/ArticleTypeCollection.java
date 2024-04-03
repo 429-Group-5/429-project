@@ -145,7 +145,9 @@ public class ArticleTypeCollection extends EntityBase {
      * finds ArticleTypes by ONLY alpha code
      */
     public void findArticleTypeAlphaCode(String alphaCode) {
-        String query = "SELECT * FROM " + myTableName + " WHERE alphaCode = '" + alphaCode + "' AND status = '" + "Active" + "';";
+        String query = "SELECT * FROM " + myTableName + 
+            " WHERE alphaCode = '" + alphaCode + 
+            "' AND status = '" + "Active" + "';";
         
         Vector allDataRetrieved = getSelectQueryResult(query);
 

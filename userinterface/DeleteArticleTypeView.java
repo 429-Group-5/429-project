@@ -147,7 +147,7 @@ public class DeleteArticleTypeView extends View
 
         Font myFont = Font.font("Helvetica", FontWeight.BOLD, 12);
     
-        Text aplhaCodeLabel = new Text(" Alpha Code Label : ");
+        Text aplhaCodeLabel = new Text(" Alpha Code: ");
         aplhaCodeLabel.setFont(myFont);
         aplhaCodeLabel.setWrappingWidth(150);
         aplhaCodeLabel.setTextAlignment(TextAlignment.RIGHT);
