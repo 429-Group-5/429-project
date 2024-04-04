@@ -294,11 +294,35 @@ public class DeleteArticleTypeView extends View
 	{
 		statusLog.clearErrorMessage();
 	}
-
+	
+	/*getInput---------------------------------------------
+	 * takes the input of textfields and makes a props object
+	 */
 	public Properties getInput() {
 		Properties props = new Properties();
-		props.setProperty("description", description.getText());
-		props.setProperty("alphaCode", alphaCode.getText());
+		
+		try {
+			String descriptionString = description.getText();
+			String alphaCodeString = alphaCode.getText();
+
+			if (alphaCodeString.isEmpty() && descriptionString.isEmpty()){
+				return props;
+			}
+
+			if (!alphaCodeString.isEmpty()){
+				props.setProperty("alphaCode", alphaCodeString);
+			}
+
+			if (!descriptionString.isEmpty()){
+				props.setProperty("description", descriptionString);
+			}
+		} catch (Exception e) {
+
+		}
+
+		//props.setProperty("description", description.getText());
+		//props.setProperty("alphaCode", alphaCode.getText());
+		
 		return props;
 	}
 	/*
