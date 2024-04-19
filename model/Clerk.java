@@ -99,8 +99,8 @@ public class Clerk implements IView, IModel
             case "ModifyColor":
             case "DeleteColor":
 			case "AddInventory":
-				createAndShowAddInventoryView();
-				break;
+				// createAndShowAddInventoryView();
+				// break;
 			case "ModifyInventory":
 			case "DeleteInventory":
 			case "CheckoutInventory":
