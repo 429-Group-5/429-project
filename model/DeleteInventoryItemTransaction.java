@@ -27,7 +27,6 @@ public class DeleteInventoryItemTransaction extends Transaction {
 
     public void processTransaction() {
         item.delete();
-        item.update();
         transactionStatusMessage = (String)item.getState("UpdateStatusMessage");
     }
 
@@ -53,6 +52,7 @@ public class DeleteInventoryItemTransaction extends Transaction {
                 break;
             case "DeleteInventoryItem":
                 processTransaction();
+                swapToView(createView());
                 break;
             case "DoScanBarcode":
                 try
