@@ -443,7 +443,7 @@ public class ModifyInventoryView extends View {
                 if (isValidPhoneNumber(donorPhoneString)) {
                     props.setProperty("donorPhone", donorPhoneString);
                 } else {
-                    statusLog.displayErrorMessage("Phone number must follow XXX-XXXX");
+                    statusLog.displayErrorMessage("Phone number must follow XXX-XXX-XXXX");
                     return false;
                 }
             }

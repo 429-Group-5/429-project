@@ -223,9 +223,16 @@ public class Color extends EntityBase {
                 persistentState.setProperty("id", "" + id);
                 updateStatusMessage = "New Color installed successfully in database!";
             }
-        } catch (SQLException ex) {
-            updateStatusMessage = "Error: " + ex.getMessage();
-        }
+        } catch (SQLException ex)
+		{
+			if (ex.getErrorCode() == 1062) { // duplicate key
+				updateStatusMessage = "Error: Color with barcode prefix " + 
+					persistentState.getProperty("barcodePrefix")+ " already exists";
+			}
+			else {
+				updateStatusMessage = "Error while updating color in database";
+			}
+		}
         //DEBUG System.out.println("updateStateInDatabase " + updateStatusMessage);
     }
 

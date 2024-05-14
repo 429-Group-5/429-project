@@ -70,6 +70,7 @@ public class AddColorView extends View
         container.getChildren().add(createStatusLog());
 
         getChildren().add(container);
+        statusLog.setWrappingWidth(500);
 
         myModel.subscribe("TransactionStatus", this);
     }

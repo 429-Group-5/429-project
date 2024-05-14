@@ -75,6 +75,7 @@ public class ModifyArticleTypeView extends View {
 		getChildren().add(container);
 		
 		populateFields();
+		statusLog.setWrappingWidth(500);
 
         myModel.subscribe("TransactionStatus", this);
 	}
