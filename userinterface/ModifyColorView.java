@@ -78,6 +78,7 @@ public class ModifyColorView extends View {
 		getChildren().add(container);
 		
 		populateFields();
+		statusLog.setWrappingWidth(500);
 
         myModel.subscribe("TransactionStatus", this);
 	}
