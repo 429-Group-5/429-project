@@ -325,6 +325,8 @@ public class InventoryItem extends EntityBase implements IView {
 	 */
 	public void delete() {
         persistentState.setProperty("status", "Removed");
+        this.update();
+        updateStatusMessage = "Inventory item deleted successfully!";
     }//End delete----------------------------------------
 
     public void removeItem() {
